@@ -71,13 +71,13 @@ for i in range(0, len(podcasts), 10):
                         <h5 class="card-title">{podcast["title"]}</h5>
                         <p class="card-text">{podcast["description"]}</p>
                         <div class="desktop-links">
-                            <a href="{podcast["link"]}" class="btn btn-primary" target="_blank">Open Link</a>
-                            <a href="podcasts://podcast.apple.com/us/podcast/id{podcast_id}?i={episode_id}" class="btn btn-secondary" target="_blank">Podcasts App</a>
-                            <a href="{podcast["lcs_link"]}" class="btn btn-info" target="_blank">LCS</a>
+                            <a href="{podcast["link"]}" class="btn btn-primary" target="_blank">Link</a>
+                            <a href="podcasts://podcast.apple.com/us/podcast/id{podcast_id}?i={episode_id}" class="btn btn-secondary" target="_blank">Podcast</a>
+                            <a href="{podcast["lcs_link"]}" class="btn btn-info" target="_blank">Learncraft</a>
                         </div>
                         <div class="mobile-links d-none">
-                            <a href="{podcast["link"]}" class="btn btn-primary" target="_blank">Open Podcast</a>
-                            <a href="{podcast["lcs_link"]}" class="btn btn-info" target="_blank">LCS</a>
+                            <a href="{podcast["link"]}" class="btn btn-primary" target="_blank">Podcast</a>
+                            <a href="{podcast["lcs_link"]}" class="btn btn-info" target="_blank">Learncraft</a>
                         </div>
                     </div>
                 </div>
