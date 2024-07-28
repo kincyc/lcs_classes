@@ -65,9 +65,15 @@ for i in range(0, len(podcasts), 10):
                     <div class="card-body">
                         <h5 class="card-title">{podcast["title"]}</h5>
                         <p class="card-text">{podcast["description"]}</p>
-                        <a href="{podcast["link"]}" class="btn btn-primary" target="_blank">Open Link</a>
-                        <a href="podcasts://podcast.apple.com/us/podcast/id{podcast_id}?i={episode_id}" class="btn btn-secondary" target="_blank">Podcasts App</a>
-                        <a href="{podcast["lcs_link"]}" class="btn btn-info" target="_blank">LCS</a>
+                        <div class="desktop-links">
+                            <a href="{podcast["link"]}" class="btn btn-primary" target="_blank">Open Link</a>
+                            <a href="podcasts://podcast.apple.com/us/podcast/id{podcast_id}?i={episode_id}" class="btn btn-secondary" target="_blank">Podcasts App</a>
+                            <a href="{podcast["lcs_link"]}" class="btn btn-info" target="_blank">LCS</a>
+                        </div>
+                        <div class="mobile-links d-none">
+                            <a href="{podcast["link"]}" class="btn btn-primary" target="_blank">Open Podcast</a>
+                            <a href="{podcast["lcs_link"]}" class="btn btn-info" target="_blank">LCS</a>
+                        </div>
                     </div>
                 </div>
         '''
@@ -83,11 +89,25 @@ html_content += '''
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+        // Function to detect mobile browser
+        function isMobileBrowser() {
+            return /Mobi|Android/i.test(navigator.userAgent);
+        }
+
         $(document).ready(function(){
             $(".episode-title").click(function(){
                 var target = $(this).data("target");
                 $(target).collapse('toggle');
             });
+
+            // Toggle links based on browser type
+            if (isMobileBrowser()) {
+                $('.desktop-links').addClass('d-none');
+                $('.mobile-links').removeClass('d-none');
+            } else {
+                $('.mobile-links').addClass('d-none');
+                $('.desktop-links').removeClass('d-none');
+            }
         });
     </script>
 </body>
