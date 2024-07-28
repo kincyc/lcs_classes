@@ -8,9 +8,9 @@ with open('podcast_episodes.json', 'r') as file:
 # Process each podcast episode
 for podcast in podcasts:
     # Extract episode number from the title
-    episode_number = re.search(r'(\d+):', podcast['title'])
+    episode_number = re.search(r'(\d+)\s*:', podcast['title'])
     if episode_number:
-        episode_number = episode_number.group(1)
+        episode_number = int(episode_number.group(1))  # Convert to integer
     else:
         episode_number = None
     
@@ -23,6 +23,9 @@ for podcast in podcasts:
     # Add new attributes
     podcast['lcs_link'] = lcs_link
     podcast['episode'] = episode_number
+
+# Sort podcasts by episode number
+podcasts.sort(key=lambda x: (x['episode'] is None, x['episode']))
 
 # Generate HTML content
 html_content = '''
@@ -47,11 +50,13 @@ html_content = '''
 # Create folding panels for every 10 episodes
 for i in range(0, len(podcasts), 10):
     episode_titles = ", ".join([podcast["title"].split(": ", 1)[1] for podcast in podcasts[i:i+10]])
+    episode_range_start = podcasts[i]["episode"]
+    episode_range_end = podcasts[min(i + 9, len(podcasts) - 1)]["episode"]
 
     html_content += f'''
         <div class="card mb-4">
             <div class="card-header episode-title" data-toggle="collapse" data-target="#episodes-{i//10}" aria-expanded="false" aria-controls="episodes-{i//10}">
-                Episodes {i + 1} - {min(i + 10, len(podcasts))} - {episode_titles}
+                Episodes {episode_range_start} - {episode_range_end} - {episode_titles}
             </div>
             <div id="episodes-{i//10}" class="collapse">
     '''
